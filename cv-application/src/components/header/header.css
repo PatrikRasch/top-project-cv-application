@@ -1,0 +1,85 @@
+:root {
+  --arial: "Arial", sans-serif;
+}
+
+.personal-header {
+  height: 100%;
+  margin: 20px;
+  padding: 10px;
+  font-size: 30px;
+  font-family: var(--arial);
+}
+
+.header-container {
+  display: grid;
+  grid-template-columns: 4fr 2px 6fr;
+  /* background-color: slategrey; */
+  height: 10vh;
+  margin: 20px;
+  padding: 10px;
+  border: 2px solid grey;
+}
+
+.header-left {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.name,
+.email,
+.phone-number,
+.bio {
+  font-size: 20px;
+  font-family: var(--arial);
+  border: none;
+  text-align: center;
+  width: 100%;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+  outline: none;
+}
+
+textarea {
+  resize: none;
+}
+
+.divider {
+  width: 2px;
+  background-color: black;
+}
+
+.header-right {
+  position: relative;
+  display: grid;
+  align-content: center;
+  height: 100%;
+}
+
+.header-edit,
+.header-submit {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 6px;
+  border: none;
+  width: 75px;
+  height: 30px;
+  font-size: 15px;
+  color: white;
+}
+
+.header-submit {
+  background-color: rgb(0, 149, 255);
+}
+
+.header-edit {
+  background-color: rgb(0, 188, 66);
+}
+
+.header-submit:hover,
+.header-edit:hover {
+  opacity: 0.9;
+}
