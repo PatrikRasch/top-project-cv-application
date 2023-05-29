@@ -1,127 +1,114 @@
-import React from "react";
+import React, { useState } from "react";
 import "./education.css";
 
-class Education extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      submitted: false,
-    };
-  }
+export default function Education(props) {
+  const [submitted, setSubmitted] = useState(false);
 
-  handleRemoveEducation = (id) => {
-    this.props.removeEducation(id);
+  const handleRemoveEducation = (id) => {
+    props.removeEducation(id);
   };
 
-  submitEditEducation = () => {
-    this.setState((prevState) => ({
-      submitted: !prevState.submitted,
-    }));
+  const submitEditEducation = () => {
+    setSubmitted((prevSubmitted) => !prevSubmitted);
   };
 
-  handleUpdateEducation = (id, e, inputField) => {
+  const handleUpdateEducation = (id, e, inputField) => {
     const inputValue = e.target.value;
-    this.props.updateEducation(id, inputValue, inputField);
+    props.updateEducation(id, inputValue, inputField);
   };
 
-  render() {
-    const { submitted } = this.state;
-
-    if (submitted === true) {
-      return (
+  if (submitted === true) {
+    return (
+      <div>
         <div>
-          <div>
-            <div className="education-container">
-              <div className="education-left">
-                <p className="school-name">SCHOOL: {this.props.educationArrayItem.schoolName}</p>
-                <div className="date-of-study-container">
-                  <p className="date-of-study">{this.props.educationArrayItem.dateOfStudyStart}</p>
-                  <div className="dash"></div>
-                  <p className="date-of-study">{this.props.educationArrayItem.dateOfStudyEnd}</p>
-                </div>
+          <div className="education-container">
+            <div className="education-left">
+              <p className="school-name">SCHOOL: {props.educationArrayItem.schoolName}</p>
+              <div className="date-of-study-container">
+                <p className="date-of-study">{props.educationArrayItem.dateOfStudyStart}</p>
+                <div className="dash"></div>
+                <p className="date-of-study">{props.educationArrayItem.dateOfStudyEnd}</p>
               </div>
-              <div className="divider education-divider"></div>
-              <div className="education-right">
-                <p className="title-of-study">STUDY: {this.props.educationArrayItem.titleOfStudy}</p>
-                <p className="average-grade">AVERAGE GRADE: {this.props.educationArrayItem.averageGrade}</p>
-                <button className="education-edit" onClick={() => this.submitEditEducation()}>
-                  Edit
-                </button>
-                <button className="education-delete" onClick={() => this.handleRemoveEducation(this.props.id)}>
-                  Delete
-                </button>
-              </div>
+            </div>
+            <div className="divider education-divider"></div>
+            <div className="education-right">
+              <p className="title-of-study">STUDY: {props.educationArrayItem.titleOfStudy}</p>
+              <p className="average-grade">AVERAGE GRADE: {props.educationArrayItem.averageGrade}</p>
+              <button className="education-edit" onClick={() => submitEditEducation()}>
+                Edit
+              </button>
+              <button className="education-delete" onClick={() => handleRemoveEducation(props.id)}>
+                Delete
+              </button>
             </div>
           </div>
         </div>
-      );
-    } else
-      return (
+      </div>
+    );
+  } else
+    return (
+      <div>
         <div>
-          <div>
-            <div className="education-container">
-              <div className="education-left">
-                <form onSubmit={this.handleSubmit}>
+          <div className="education-container">
+            <div className="education-left">
+              <form>
+                <input
+                  type="text"
+                  className="school-name"
+                  placeholder="School Name"
+                  value={props.educationArrayItem.schoolName}
+                  onChange={(e) => handleUpdateEducation(props.id, e, "schoolName")}
+                />
+              </form>
+              <div className="date-of-study-container">
+                <form>
                   <input
-                    type="text"
-                    className="school-name"
-                    placeholder="School Name"
-                    value={this.props.educationArrayItem.schoolName}
-                    onChange={(e) => this.handleUpdateEducation(this.props.id, e, "field1")}
+                    type="date"
+                    className="date-of-study"
+                    value={props.educationArrayItem.dateOfStudyStart}
+                    onChange={(e) => handleUpdateEducation(props.id, e, "dateOfStudyStart")}
                   />
                 </form>
-                <div className="date-of-study-container">
-                  <form onSubmit={this.handleSubmit}>
-                    <input
-                      type="date"
-                      className="date-of-study"
-                      value={this.props.educationArrayItem.dateOfStudyStart}
-                      onChange={(e) => this.handleUpdateEducation(this.props.id, e, "field2")}
-                    />
-                  </form>
-                  <div className="dash"></div>
-                  <form onSubmit={this.handleSubmit}>
-                    <input
-                      type="date"
-                      className="date-of-study"
-                      value={this.props.educationArrayItem.dateOfStudyEnd}
-                      onChange={(e) => this.handleUpdateEducation(this.props.id, e, "field3")}
-                    />
-                  </form>
-                </div>
+                <div className="dash"></div>
+                <form>
+                  <input
+                    type="date"
+                    className="date-of-study"
+                    value={props.educationArrayItem.dateOfStudyEnd}
+                    onChange={(e) => handleUpdateEducation(props.id, e, "dateOfStudyEnd")}
+                  />
+                </form>
               </div>
-              <div className="divider education-divider"></div>
-              <div className="education-right">
-                <form onSubmit={this.handleSubmit}>
-                  <input
-                    type="text"
-                    className="title-of-study"
-                    placeholder="Title of Study"
-                    value={this.props.educationArrayItem.titleOfStudy}
-                    onChange={(e) => this.handleUpdateEducation(this.props.id, e, "field4")}
-                  />
-                  <input
-                    type="text"
-                    className="average-grade"
-                    placeholder="Average Grade"
-                    maxLength={3}
-                    value={this.props.educationArrayItem.averageGrade}
-                    onChange={(e) => this.handleUpdateEducation(this.props.id, e, "field5")}
-                  />
-                </form>
+            </div>
+            <div className="divider education-divider"></div>
+            <div className="education-right">
+              <form>
+                <input
+                  type="text"
+                  className="title-of-study"
+                  placeholder="Title of Study"
+                  value={props.educationArrayItem.titleOfStudy}
+                  onChange={(e) => handleUpdateEducation(props.id, e, "titleOfStudy")}
+                />
+                <input
+                  type="text"
+                  className="average-grade"
+                  placeholder="Average Grade"
+                  maxLength={3}
+                  value={props.educationArrayItem.averageGrade}
+                  onChange={(e) => handleUpdateEducation(props.id, e, "averageGrade")}
+                />
+              </form>
 
-                <button className="education-submit" onClick={() => this.submitEditEducation()}>
-                  Submit
-                </button>
-                <button className="education-delete" onClick={() => this.handleRemoveEducation(this.props.id)}>
-                  Delete
-                </button>
-              </div>
+              <button className="education-submit" onClick={() => submitEditEducation()}>
+                Submit
+              </button>
+              <button className="education-delete" onClick={() => handleRemoveEducation(props.id)}>
+                Delete
+              </button>
             </div>
           </div>
         </div>
-      );
-  }
+      </div>
+    );
 }
-
-export default Education;
